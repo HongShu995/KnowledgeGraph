@@ -2,8 +2,10 @@ spring:
   neo4j:
     uri: bolt://localhost:7687
     authentication:
+      # 默认用户名neo4j
       username: neo4j
-      password: 526239976
+      # 你的登录密码
+      password: 123456
 
   servlet:
     multipart:
