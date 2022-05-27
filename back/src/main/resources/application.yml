@@ -5,7 +5,7 @@ spring:
       # 默认用户名neo4j
       username: neo4j
       # 你的登录密码
-      password: 526239976
+      password: 123456
 
   servlet:
     multipart:
@@ -16,4 +16,4 @@ spring:
 #上传配置
 upload:
   url: 访问地址
-  path: D:\test\
+  path: 文件存储路径
