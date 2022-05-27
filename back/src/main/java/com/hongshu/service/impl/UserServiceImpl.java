@@ -165,6 +165,10 @@ public class UserServiceImpl implements UserService
     @Override
     public void deleteUser(Long id)
     {
+        if(id == UserUtils.getLoginUser().getId())
+        {
+            throw new MyException("不能删除正在登录的用户");
+        }
         userDao.deleteById(id);
     }
 

@@ -196,13 +196,25 @@
         </el-form-item>
       </el-form>
       <div slot="footer">
-        <el-button type="danger" @click="deleteUser">删除</el-button>
+        <el-button type="danger" @click="isRightDelete = true">删除</el-button>
         <el-button @click="isEdit = false">取 消</el-button>
-        <el-button type="primary" @click="editUserRole">
-          确 定
-        </el-button>
+        <el-button type="primary" @click="editUserRole">确 定</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog :visible.sync="isRightDelete" width="25%">
+      <div class="dialog-title-container" slot="title">
+        删除用户
+      </div>
+      <div style="font-size: 20px">
+        是否删除该用户，此操作不可逆！
+      </div>
+      <div slot="footer">
+        <el-button @click="isRightDelete = false">取 消</el-button>
+        <el-button type="primary" @click="deleteUser">确 定</el-button>
+      </div>
+    </el-dialog>
+
     <el-dialog :visible.sync="isExcelAdd" width="21%">
       <div class="dialog-title-container" slot="title">
         通过Excel表格导入用户信息
@@ -246,6 +258,7 @@ export default {
       isEdit: false,
       isError: false,
       isExcelAdd: false,
+      isRightDelete: false,
       unifiedPassword: "",
       secondPassword: "",
       condition : {
@@ -426,13 +439,15 @@ export default {
             message: "删除成功"
           })
           this.listUsers();
+          this.isRightDelete = false;
+          this.isEdit = false;
         } else {
+          this.isRightDelete = false;
           this.$notify.error({
             title: "失败",
             message: data.message
           })
         }
-        this.isEdit = false;
       })
     },
 
