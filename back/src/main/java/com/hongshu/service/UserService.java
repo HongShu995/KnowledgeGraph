@@ -55,11 +55,26 @@ public interface UserService
     void updateUserInfo(UserInfoVO userInfoVO);
 
     /**
+     * 修改用户头像
+     *
+     * @param file 头像图片
+     * @return 头像地址
+     */
+    String updateUserAvatar(MultipartFile file);
+
+    /**
      * 添加用户
      *
      * @param userInfoVO 用户信息
      */
     void addUser(UserInfoVO userInfoVO);
+
+    /**
+     * 删除用户
+     *
+     * @param id 用户Id
+     */
+    void deleteUser(Long id);
 
     /**
      * 修改密码

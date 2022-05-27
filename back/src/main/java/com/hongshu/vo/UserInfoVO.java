@@ -19,22 +19,22 @@ import java.util.List;
 @Builder
 public class UserInfoVO
 {
-    /*
+    /**
     用户名
      */
     private String username;
 
-    /*
+    /**
     密码
      */
     private String password;
 
-    /*
+    /**
     昵称
      */
     private String nickname;
 
-    /*
+    /**
     角色名
      */
     private List<Long> roleList;

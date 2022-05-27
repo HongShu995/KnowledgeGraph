@@ -130,6 +130,15 @@ public interface UserDao extends Neo4jRepository<User,Long>
     void setUserPassword(@Param("id")Long id, @Param("password")String password);
 
     /**
+     * 更新用户头像
+     *
+     * @param id 用户Id
+     * @param avatar 用户头像地址
+     */
+    @Query("MATCH (n:User) WHERE id(n)={id} SET n.avatar={avatar}")
+    void updateAvatar(@Param("id")Long id, @Param("avatar")String avatar);
+
+    /**
      * 修改更新时间
      *
      * @param id 用户Id

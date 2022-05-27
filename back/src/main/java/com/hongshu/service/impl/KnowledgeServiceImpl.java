@@ -184,6 +184,10 @@ public class KnowledgeServiceImpl implements KnowledgeService
             CustomDTO customDTO = new CustomDTO(normal);
             NodeDTO nodeDTO = BeanCopyUtils.copyObject(knowledge, NodeDTO.class);
             nodeDTO.setItemStyle(customDTO);
+            if (knowledgeDao.countQuestion(knowledge.getId()) > 0)
+            {
+                nodeDTO.setIsHaveTest(true);
+            }
             nodeList.add(nodeDTO);
         }
         return nodeList;

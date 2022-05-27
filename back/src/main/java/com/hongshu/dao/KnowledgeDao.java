@@ -18,6 +18,15 @@ import java.util.List;
 public interface KnowledgeDao extends Neo4jRepository<Knowledge,Long>
 {
     /**
+     * 通过知识点Id查询拥有试题数量
+     *
+     * @param id 知识点Id
+     * @return 试题数量
+     */
+    @Query("MATCH (n:Knowledge)-[r:KnowledgeTest]->(m:Question) WHERE id(n)={id} RETURN COUNT(m)")
+    Integer countQuestion(@Param("id")Long id);
+
+    /**
      * 获取所有知识点
      *
      * @return 知识点列表
@@ -31,15 +40,15 @@ public interface KnowledgeDao extends Neo4jRepository<Knowledge,Long>
      * @param keywords 搜索内容
      * @return 知识点列表
      */
-    @Query("MATCH (n:Knowledge)-[r*0..1]-(result) WHERE id(n)<>179 AND n.name=~ ('.*'+{keywords}+'.*') RETURN result")
+    @Query("MATCH (n:Knowledge)-[r*0..1]-(m:Knowledge) WHERE id(n)<>179 AND n.name=~ ('.*'+{keywords}+'.*') RETURN m")
     List<Knowledge> listKnowledgeOne(@Param("keywords")String keywords);
-    @Query("MATCH (n:Knowledge)-[r*0..2]-(result) WHERE id(n)<>179 AND n.name=~ ('.*'+{keywords}+'.*') RETURN result")
+    @Query("MATCH (n:Knowledge)-[r*0..2]-(m:Knowledge) WHERE id(n)<>179 AND n.name=~ ('.*'+{keywords}+'.*') RETURN m")
     List<Knowledge> listKnowledgeTwo(@Param("keywords")String keywords);
-    @Query("MATCH (n:Knowledge)-[r*0..3]-(result) WHERE id(n)<>179 AND n.name=~ ('.*'+{keywords}+'.*') RETURN result")
+    @Query("MATCH (n:Knowledge)-[r*0..3]-(m:Knowledge) WHERE id(n)<>179 AND n.name=~ ('.*'+{keywords}+'.*') RETURN m")
     List<Knowledge> listKnowledgeThree(@Param("keywords")String keywords);
-    @Query("MATCH (n:Knowledge)-[r*0..4]-(result) WHERE id(n)<>179 AND n.name=~ ('.*'+{keywords}+'.*') RETURN result")
+    @Query("MATCH (n:Knowledge)-[r*0..4]-(m:Knowledge) WHERE id(n)<>179 AND n.name=~ ('.*'+{keywords}+'.*') RETURN m")
     List<Knowledge> listKnowledgeFour(@Param("keywords")String keywords);
-    @Query("MATCH (n:Knowledge)-[r*0..5]-(result) WHERE id(n)<>179 AND n.name=~ ('.*'+{keywords}+'.*') RETURN result")
+    @Query("MATCH (n:Knowledge)-[r*0..5]-(m:Knowledge) WHERE id(n)<>179 AND n.name=~ ('.*'+{keywords}+'.*') RETURN m")
     List<Knowledge> listKnowledgeFive(@Param("keywords")String keywords);
 
 

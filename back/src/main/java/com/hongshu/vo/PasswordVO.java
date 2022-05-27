@@ -20,13 +20,13 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class PasswordVO
 {
-    /*
+    /**
     旧密码
      */
     @NotBlank(message = "旧密码不能为空")
     private String oldPassword;
 
-    /*
+    /**
     新密码
      */
     @Size(min = 6, message = "新密码不能少于6位")

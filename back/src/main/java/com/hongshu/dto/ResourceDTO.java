@@ -20,37 +20,37 @@ import java.util.List;
 @AllArgsConstructor
 public class ResourceDTO
 {
-    /*
+    /**
     权限Id
      */
     private Long id;
 
-    /*
+    /**
     资源名
      */
     private String resourceName;
 
-    /*
+    /**
     权限路径
      */
     private String url;
 
-    /*
+    /**
     请求方式
      */
     private String requestMethod;
 
-    /*
+    /**
     是否匿名访问
      */
     private Boolean isAnonymous;
 
-    /*
+    /**
     创建时间
      */
     private String createTime;
 
-    /*
+    /**
     权限列表
      */
     private List<ResourceDTO> children;

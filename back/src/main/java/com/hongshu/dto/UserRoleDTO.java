@@ -17,12 +17,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserRoleDTO
 {
-    /*
+    /**
     角色id
      */
     private Long id;
 
-    /*
+    /**
     角色名
      */
     private String roleName;

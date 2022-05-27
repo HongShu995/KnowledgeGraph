@@ -138,7 +138,8 @@ export default {
     updateAvatar(response) {
       if (response.flag) {
         this.$message.success(response.message);
-        this.$store.commit("updateAvatar", response.data.path);
+        console.log(response.data);
+        this.$store.commit("updateAvatar", response.data);
       } else {
         this.$message.error(response.message);
       }

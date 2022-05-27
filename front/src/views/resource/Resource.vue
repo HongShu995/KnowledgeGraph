@@ -8,6 +8,10 @@
       >
         新增模块
       </el-button>
+      <el-button type="danger" size="small"
+                 icon="el-icon-warning-outline" @click="swagger=true">
+        导入接口信息
+      </el-button>
       <!-- 数据筛选 -->
       <div style="margin-left: auto">
         <el-input v-model="condition.keywords" prefix-icon="el-icon-search"
@@ -125,6 +129,20 @@
         </el-button>
       </span>
     </el-dialog>
+    <!--导入Swagger2接口信息-->
+    <el-dialog :visible.sync="swagger" width="30%">
+      <div class="dialog-title-container" slot="title">
+        警告
+      </div>
+      <h2 style="margin-left: 150px">是否重新导入接口信息？</h2>
+      <h1 style="margin-left: 80px">重新导入会导致非管理员角色的接口权限数据清空</h1>
+      <div slot="footer">
+        <el-button @click="swagger=false">取 消</el-button>
+        <el-button type="danger" @click="importSwagger">
+          确 定
+        </el-button>
+      </div>
+    </el-dialog>
   </el-card>
 </template>
 
@@ -140,6 +158,7 @@ export default {
       loading: true,
       addModule: false,
       addResource: false,
+      swagger: false,
       resourceList: [],
       condition : {
         id:"",
@@ -161,8 +180,8 @@ export default {
               keywords: this.condition.keywords
             }
           })
-          .then(({ data }) => {
-            if(data.flag === false) {
+          .then(({data}) => {
+            if (data.flag === false) {
               this.$message.error("用户长时间未操作，请重新登录");
             }
             data.data.forEach(item => {
@@ -177,10 +196,10 @@ export default {
     },
 
     changeResource(resource) {
-      this.axios.post("/api/admin/resources/change",{
+      this.axios.post("/api/admin/resources/change", {
         id: resource.id,
         whether: resource.isAnonymous
-      }).then(({ data }) => {
+      }).then(({data}) => {
         if (data.flag) {
           this.$notify.success({
             title: "成功",
@@ -225,7 +244,7 @@ export default {
     },
 
     deleteResource(id) {
-      this.axios.delete("/api/admin/resources/" + id).then(({ data }) => {
+      this.axios.delete("/api/admin/resources/" + id).then(({data}) => {
         if (data.flag) {
           this.$notify.success({
             title: "成功",
@@ -248,7 +267,7 @@ export default {
       }
       this.axios
           .post("/api/admin/resources", this.resourceForm)
-          .then(({ data }) => {
+          .then(({data}) => {
             if (data.flag) {
               this.$notify.success({
                 title: "成功",
@@ -264,7 +283,21 @@ export default {
             this.addModule = false;
             this.addResource = false;
           });
-    }
+    },
+
+    importSwagger() {
+      this.axios.get("/api/admin/resources/import/swagger")
+          .then(({data}) => {
+            this.swagger = false;
+            if (data.flag) {
+              this.$notify.success({
+                title: "成功",
+                message: data.message
+              });
+            }
+          });
+    },
+
   },
 
   computed: {

@@ -17,12 +17,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserDisableVO
 {
-    /*
+    /**
     id
      */
     private Long id;
 
-    /*
+    /**
     封禁状态
      */
     private Boolean isDisable;

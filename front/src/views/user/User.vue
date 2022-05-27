@@ -196,6 +196,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer">
+        <el-button type="danger" @click="deleteUser">删除</el-button>
         <el-button @click="isEdit = false">取 消</el-button>
         <el-button type="primary" @click="editUserRole">
           确 定
@@ -415,6 +416,24 @@ export default {
           this.isAdd = false;
         });
       }
+    },
+
+    deleteUser() {
+      this.axios.delete("/api/admin/users/"+this.userForm.userId).then(({data}) => {
+        if (data.flag) {
+          this.$notify.success({
+            title: "成功",
+            message: "删除成功"
+          })
+          this.listUsers();
+        } else {
+          this.$notify.error({
+            title: "失败",
+            message: data.message
+          })
+        }
+        this.isEdit = false;
+      })
     },
 
     // uploadProcess(event, file, fileList){

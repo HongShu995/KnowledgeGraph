@@ -19,17 +19,17 @@ import java.util.List;
 @Builder
 public class UserRolesVO
 {
-    /*
+    /**
     用户Id
      */
     private Long userId;
 
-    /*
+    /**
     用户昵称
      */
     private String nickname;
 
-    /*
+    /**
     角色Id
      */
     private List<Long> roleList;

@@ -19,12 +19,12 @@ import java.util.List;
 @Builder
 public class PageResult<T>
 {
-    /*
+    /**
     分页列表
      */
     private List<T> recordList;
 
-    /*
+    /**
     总数
      */
     private Integer count;

@@ -21,37 +21,37 @@ import java.util.List;
 @NoArgsConstructor
 public class RoleDTO
 {
-    /*
+    /**
     id
      */
     private Long id;
 
-    /*
+    /**
     角色名
      */
     private String roleName;
 
-    /*
+    /**
     角色标签
      */
     private String roleLabel;
 
-    /*
+    /**
     是否禁用
      */
     private Boolean isDisable;
 
-    /*
+    /**
     创建时间
      */
     private String createTime;
 
-    /*
+    /**
     资源id列表
      */
     private List<Long> resourceIdList;
 
-    /*
+    /**
     菜单id列表
      */
     private List<Long> menuIdList;

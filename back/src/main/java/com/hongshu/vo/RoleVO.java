@@ -20,29 +20,29 @@ import java.util.List;
 @NoArgsConstructor
 public class RoleVO
 {
-    /*
+    /**
     id
      */
     private Long id;
 
-    /*
+    /**
     角色名
      */
     @NotBlank(message = "角色名不能为空")
     private String roleName;
 
-    /*
+    /**
     标签
      */
     @NotBlank(message = "权限标签不能为空")
     private String roleLabel;
 
-    /*
+    /**
     资源列表
      */
     private List<Long> resourceIdList;
 
-    /*
+    /**
     菜单列表
      */
     private List<Long> menuIdList;

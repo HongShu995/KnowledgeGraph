@@ -21,34 +21,34 @@ import org.springframework.data.neo4j.core.schema.Node;
 @NoArgsConstructor
 public class Role
 {
-    /*
+    /**
     数据库自动生成id
      */
     @Id
     @GeneratedValue
     private Long id;
 
-    /*
+    /**
     角色名
      */
     private String roleName;
 
-    /*
+    /**
     角色标签
      */
     private String roleLabel;
 
-    /*
+    /**
     是否禁用
      */
     private Boolean isDisable;
 
-    /*
+    /**
     创建时间
      */
     private String createTime;
 
-    /*
+    /**
     修改时间
      */
     private String updateTime;

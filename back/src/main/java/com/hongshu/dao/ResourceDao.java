@@ -55,7 +55,7 @@ public interface ResourceDao extends Neo4jRepository<Resource,Long>
      *
      * @return 接口列表
      */
-    @Query("MATCH (n:Resource) WHERE id(n)<>91 AND n.url<>'NULL' RETURN n")
+    @Query("MATCH (n:Resource) WHERE id(n)<>91 AND n.url<>'NULL' AND n.isAnonymous=FALSE RETURN n")
     List<Resource> listInterface();
 
     /**

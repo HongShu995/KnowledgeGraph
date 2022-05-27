@@ -91,6 +91,7 @@ export default new Vuex.Store({
       state.node.url = params.data.url;
       state.node.symbolSize = params.data.symbolSize;
       state.node.createTime = params.data.createTime;
+      state.node.isHaveTest = params.data.isHaveTest;
     },
 
     selectLink(state, params) {

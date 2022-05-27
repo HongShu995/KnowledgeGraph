@@ -8,6 +8,17 @@
                      @click="openInfoModel(false)">
             节点信息
           </el-button>
+
+          <span v-if="nodeForm.isHaveTest">
+            &nbsp&nbsp
+            <el-button type="info" size="small"
+                                icon="el-icon-s-claim"
+                                @click="test"
+            >
+              试题测试
+            </el-button>
+          </span>
+
           <span>
           &nbsp&nbsp<i class="el-icon-star-off" style="margin-right:5px" />重要等级：<span style="color: #FFB200FF">{{ this.star(this.nodeForm.level) }}</span>
           </span>
@@ -29,9 +40,6 @@
           </span>
         </span>
 
-<!--        <span>-->
-<!--          <el-button size="small" @click="test">测试</el-button>-->
-<!--        </span>-->
 
       </div>
       <!-- 条件筛选 -->
@@ -57,11 +65,15 @@
         </el-button>
       </div>
     </div>
+
+    <!--图表-->
     <div>
       <el-card class="graph-card">
         <div ref="graph" id="main" style="width: 1570px;height: 700px"></div>
       </el-card>
     </div>
+
+    <!--节点信息-->
     <el-dialog :visible.sync="isEdit" width="30%">
       <div class="dialog-title-container" slot="title" ref="nodeMenu"></div>
       <el-form label-width="100px" size="medium" :model="nodeForm">
@@ -118,6 +130,7 @@
       </el-dialog>
     </el-dialog>
 
+    <!--连接信息-->
     <el-dialog :visible.sync="isConnect" width="30%">
       <div class="dialog-title-container" slot="title" ref="linkMenu"></div>
       <el-form label-width="100px" size="medium" :model="linkForm">
@@ -172,6 +185,124 @@
       </el-dialog>
     </el-dialog>
 
+    <!--习题测试-->
+    <el-dialog :visible.sync="isTest" width="60%"
+               title="知识点测试题">
+      <el-card v-if="choiceData.length > 0">
+        <div slot="header">
+          <span>选择题</span>
+        </div>
+        <div v-for="(item,index) in choiceData">
+          <div class="mb">
+            {{index + 1}}、{{item.questionName}} <span>({{item.perAnswerScore}}分)</span>
+          </div>
+          <div class="doAnswer-area">
+            <el-checkbox-group v-model="choiceList">
+              <el-checkbox v-for="object in item.optionList" :label="object"/>
+            </el-checkbox-group>
+            <div v-if="isSubmit">
+              <div class="answer-area">
+                正确答案为：{{item.correctAnswerList}}
+              </div>
+              <div class="analyse-area">
+                解析：{{item.analysis}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </el-card>
+
+      <el-card v-if="estimateData.length > 0" class="mt">
+        <div slot="header">
+          <span>判断题</span>
+        </div>
+        <div v-for="(item,index) in estimateData">
+          <div class="mb">
+            {{index + 1}}、{{item.questionName}} <span>({{item.perAnswerScore}}分)</span>
+          </div>
+          <div class="doAnswer-area">
+            <el-radio v-model="estimateList[index]" label="true">正确</el-radio>
+            <el-radio v-model="estimateList[index]" label="false">错误</el-radio>
+            <div v-if="isSubmit">
+              <div class="answer-area">
+                <div>正确答案为：
+                  <span v-if="item.judgmentAnswer">
+                  ✔️
+                </span>
+                  <span v-if="!item.judgmentAnswer">
+                  ❌
+                </span>
+                </div>
+              </div>
+              <div class="analyse-area">
+                解析：{{item.analysis}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </el-card>
+
+      <el-card v-if="fillData.length > 0" class="mt">
+        <div slot="header">
+          <span>填空题</span>
+        </div>
+        <div v-for="(item,index) in fillData">
+          <div class="mb">
+            {{index + 1}}、{{item.questionName}} <span>({{item.perAnswerScore}}分)</span>
+          </div>
+          <div class="doAnswer-area">
+            <el-input :placeholder="'请输入第'+(index2 + 1)+'空答案'"
+                      v-model="fillList[index2]"
+                      v-for="(item2,index2) in item.correctAnswerList"
+                      class="mb"
+            />
+            <div v-if="isSubmit">
+              <div class="answer-area">
+                正确答案为：{{item.correctAnswerList}}
+              </div>
+              <div class="analyse-area">
+                解析：{{item.analysis}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </el-card>
+
+      <el-card v-if="answerData.length > 0" class="mt">
+        <div slot="header">
+          <span>简答题</span>
+        </div>
+        <div v-for="(item,index) in answerData">
+          <div class="mb">
+            {{index + 1}}、{{item.questionName}} <span>({{item.perAnswerScore}}分)</span>
+          </div>
+          <div class="doAnswer-area">
+            <el-input
+                type="textarea"
+                :autosize="{ minRows: 2, maxRows: 6}"
+                placeholder="请输入内容"
+                v-model="answer">
+            </el-input>
+            <div v-if="isSubmit">
+              <div class="answer-area">
+                <div>正确答案为：{{item.correctAnswerList[0]}}</div>
+                <div>得分关键词：{{item.keywordList}}</div>
+              </div>
+              <div class="analyse-area">
+                解析：{{item.analysis}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </el-card>
+      <div>
+        <el-button type="primary"
+            style="margin-left: 470px;margin-top: 20px"
+            @click="submitTest">提交</el-button>
+        <el-button @click="clearTest">取消</el-button>
+      </div>
+    </el-dialog>
+
   </el-card>
 
 </template>
@@ -201,9 +332,22 @@ export default {
       isDelete: false,
       isDeleteLink: false,
       isConnect: false,
+      isTest: false,
+      isComputed: false,
+      isSubmit: false,
+
       data: [],
       links: [],
       nodeOptions: [],
+      choiceData: [],
+      estimateData: [],
+      fillData: [],
+      answerData: [],
+      choiceList: [],
+      estimateList: [],
+      fillList:[],
+      answer: "",
+
       levels: [
         {
           value: 1,
@@ -316,6 +460,7 @@ export default {
         url: null,
         symbolSize: null,
         createTime: null,
+        isHaveTest: null,
       },
       node: {
         id: null,
@@ -349,6 +494,14 @@ export default {
   },
 
   methods: {
+
+    submitTest() {
+      this.isSubmit = true;
+      console.log(this.choiceList)
+      console.log(this.estimateList)
+      console.log(this.fillList)
+      console.log(this.answer)
+    },
 
     listNode() {
       this.$store.commit("clear")
@@ -523,10 +676,48 @@ export default {
     },
 
     test() {
-      this.axios.get("api/admin/knowledge/test").then(({data}) => {
-        console.log(data.data)
+      this.clearTest();
+      this.axios.get("/api/question/query/"+this.nodeForm.id)
+      .then(({data}) => {
+        if (data.flag) {
+          for (let item of data.data) {
+            switch (item.typeCode) {
+              case 1:
+                this.choiceData.push(item);
+                break
+              case 2:
+                this.estimateData.push(item);
+                break
+              case 3:
+                this.fillData.push(item);
+                break
+              case 4:
+                this.answerData.push(item);
+                break
+            }
+          }
+          this.isTest = true
+        }
       })
     },
+
+//     for (let i = 0; i < data.data.length; i++) {
+//   switch (data.data[i].typeCode) {
+//     case 1:
+//       this.choiceData.push(data.data[i]);
+//       break
+//     case 2:
+//       this.estimateData.push(data.data[i]);
+//       break
+//     case 3:
+//       this.fillData.push(data.data[i]);
+//       break
+//     case 4:
+//       this.answerData.push(data.data[i]);
+//       break
+//   }
+// }
+// console.log(this.choiceData)
 
     star(level) {
       switch (level) {
@@ -557,6 +748,15 @@ export default {
       this.linkForm.source = null;
       this.linkForm.target = null;
       this.linkForm.createTime = null;
+    },
+
+    clearTest() {
+      this.isTest = false;
+      this.isSubmit = false;
+      this.choiceData = [];
+      this.estimateData = [];
+      this.fillData = [];
+      this.answerData = [];
     }
   },
 
@@ -574,4 +774,30 @@ export default {
   margin-left: 320px;
   font-size: 10px;
 }
+
+.doAnswer-area {
+  margin-left: 20px;
+  margin-bottom: 10px
+}
+
+.answer-area {
+  margin-left: 20px;
+  margin-bottom: 10px;
+  color: red;
+}
+
+.analyse-area {
+  margin-left: 20px;
+  margin-bottom: 10px;
+  color: #0081ff;
+}
+
+.mb {
+  margin-bottom: 10px
+}
+
+.mt {
+  margin-top: 10px
+}
+
 </style>

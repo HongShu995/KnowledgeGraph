@@ -15,22 +15,23 @@ import java.util.List;
 @Builder
 public class ResourceRoleDTO
 {
-    /*
+    /**
     资源id
      */
     private Long id;
 
-    /*
+    /**
     路径
      */
     private String url;
 
-    /*
+    /**
     请求方式
      */
     private String requestMethod;
 
-    /*
+
+    /**
     角色名
      */
     private List<String> roleList;

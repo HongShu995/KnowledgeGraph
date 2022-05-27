@@ -4,7 +4,6 @@ import cn.hutool.core.io.FileTypeUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
-import com.alibaba.excel.exception.ExcelAnalysisStopException;
 import com.hongshu.constant.CommonConstant;
 import com.hongshu.dao.RoleDao;
 import com.hongshu.dao.UserDao;
@@ -16,6 +15,7 @@ import com.hongshu.entity.User;
 import com.hongshu.exception.MyException;
 import com.hongshu.service.UserService;
 import com.hongshu.util.BeanCopyUtils;
+import com.hongshu.util.LocalUploadUtils;
 import com.hongshu.util.UserUtils;
 import com.hongshu.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +44,9 @@ public class UserServiceImpl implements UserService
 
     @Autowired
     private RoleDao roleDao;
+
+    @Autowired
+    private LocalUploadUtils localUploadUtils;
 
     @Override
     public User loginQuery(String username)
@@ -119,6 +122,17 @@ public class UserServiceImpl implements UserService
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public String updateUserAvatar(MultipartFile file)
+    {
+        // 头像上传
+        String avatar = localUploadUtils.uploadFile(file);
+        userDao.updateAvatar(UserUtils.getLoginUser().getId(), avatar);
+        userDao.update(UserUtils.getLoginUser().getId(), CommonConstant.getCurrentTime());
+        // 更新用户信息
+        return avatar;
+    }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -146,6 +160,12 @@ public class UserServiceImpl implements UserService
                 roleDao.setUserRole(user.getId(), id);
             }
         }
+    }
+
+    @Override
+    public void deleteUser(Long id)
+    {
+        userDao.deleteById(id);
     }
 
     @Override

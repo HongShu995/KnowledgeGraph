@@ -19,32 +19,32 @@ import java.util.List;
 @NoArgsConstructor
 public class MenuDTO
 {
-    /*
+    /**
     Id
      */
     private Long id;
 
-    /*
+    /**
     菜单名
     */
     private String name;
 
-    /*
+    /**
     路径
      */
     private String path;
 
-    /*
+    /**
     组件
      */
     private String component;
 
-    /*
+    /**
     图标
      */
     private String icon;
 
-    /*
+    /**
     排序
      */
     private Integer orderNum;

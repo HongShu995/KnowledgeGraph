@@ -48,6 +48,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
     @Async
     public void updateUserInfo() {
         User user = User.builder()
+                .id(UserUtils.getLoginUser().getId())
                 .username(UserUtils.getLoginUser().getUsername())
                 .lastLoginTime(CommonConstant.getCurrentTime())
                 .build();

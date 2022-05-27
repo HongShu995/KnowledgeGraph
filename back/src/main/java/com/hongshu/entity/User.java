@@ -25,49 +25,49 @@ import java.util.Set;
 @NoArgsConstructor
 public class User
 {
-    /*
+    /**
     数据库自动生成id
      */
     @Id
     @GeneratedValue
     private Long id;
 
-    /*
+    /**
     用户名
      */
     private String username;
 
-    /*
+    /**
     密码
      */
     private String password;
 
-    /*
+    /**
     头像
      */
     private String avatar;
 
-    /*
+    /**
     用户昵称
      */
     private String nickname;
 
-    /*
+    /**
     是否被禁用
      */
     private Boolean isDisable;
 
-    /*
+    /**
     创建时间
      */
     private String createTime;
 
-    /*
+    /**
     修改时间
      */
     private String updateTime;
 
-    /*
+    /**
     最后登录时间
      */
     private String lastLoginTime;

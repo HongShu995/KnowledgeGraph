@@ -23,45 +23,45 @@ import java.util.stream.Collectors;
 public class UserDetailsDTO implements UserDetails
 {
 
-    /*
+    /**
     用户id
      */
     private Long id;
 
-    /*
+    /**
     用户名
      */
     private String username;
 
-    /*
+    /**
     密码
      */
     private String password;
 
-    /*
+    /**
     用户角色
      */
     private List<String> roleList;
 
-    /*
+    /**
     用户头像
      */
     private String avatar;
 
-    /*
+    /**
     用户昵称
      */
     private String nickname;
 
-    /*
+    /**
     是否禁用
      */
     private Boolean isDisable;
 
-    /*
+    /**
     最近登录时间
      */
-    private Date lastLoginTime;
+    private String lastLoginTime;
 
 
     @Override

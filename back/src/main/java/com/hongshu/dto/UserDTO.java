@@ -19,27 +19,27 @@ import java.util.Date;
 @Builder
 public class UserDTO
 {
-    /*
+    /**
     用户id
      */
     private Long id;
 
-    /*
+    /**
     用户名
      */
     private String username;
 
-    /*
+    /**
     用户昵称
      */
     private String nickname;
 
-    /*
+    /**
     头像
      */
     private String avatar;
 
-    /*
+    /**
     最近登录时间
      */
     private Date lastLoginTime;

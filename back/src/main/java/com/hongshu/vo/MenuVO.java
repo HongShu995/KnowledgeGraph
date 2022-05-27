@@ -17,42 +17,42 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MenuVO
 {
-    /*
+    /**
     Id
      */
     private Long id;
 
-    /*
+    /**
     菜单名
      */
     private String name;
 
-    /*
+    /**
     路径
      */
     private String path;
 
-    /*
+    /**
     组件
      */
     private String component;
 
-    /*
+    /**
     图标
      */
     private String icon;
 
-    /*
+    /**
     排序
      */
     private Integer orderNum;
 
-    /*
+    /**
     父组件名称
      */
     private String parentName;
 
-    /*
+    /**
     是否隐藏
      */
     private Boolean isHidden;

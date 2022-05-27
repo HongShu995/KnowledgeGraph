@@ -5,7 +5,7 @@ spring:
       # 默认用户名neo4j
       username: neo4j
       # 你的登录密码
-      password: 123456
+      password: 526239976
 
   servlet:
     multipart:
@@ -13,3 +13,7 @@ spring:
       max-request-size: 100MB
 
 
+#上传配置
+upload:
+  url: 访问地址
+  path: D:\test\

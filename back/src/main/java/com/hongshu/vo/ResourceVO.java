@@ -19,28 +19,28 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class ResourceVO
 {
-    /*
+    /**
     资源Id
      */
     private Long id;
 
-    /*
+    /**
     资源名
      */
     @NotBlank(message = "资源名不能为空")
     private String resourceName;
 
-    /*
+    /**
     路径
      */
     private String url;
 
-    /*
+    /**
     请求方式
      */
     private String requestMethod;
 
-    /*
+    /**
     父资源Id
      */
     private Long parentId;

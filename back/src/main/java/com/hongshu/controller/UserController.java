@@ -85,6 +85,20 @@ public class UserController
     }
 
     /**
+     * 删除用户
+     *
+     * @param id 用户id
+     * @return {@link Result<>}
+     */
+    @ApiOperation(value = "删除用户")
+    @DeleteMapping("/admin/users/{id}")
+    public Result<?> deleteUser(@PathVariable("id") Long id)
+    {
+        userService.deleteUser(id);
+        return Result.ok();
+    }
+
+    /**
      * 修改密码
      *
      * @param passwordVO 密码信息VO
@@ -109,8 +123,8 @@ public class UserController
     @PostMapping("/users/avatar")
     public Result<String> updateUserAvatar(MultipartFile file)
     {
-//        String path = userInfoService.updateUserAvatar(file);
-        return Result.ok();
+        String path = userService.updateUserAvatar(file);
+        return Result.ok(path);
     }
 
     /**
@@ -119,7 +133,7 @@ public class UserController
      * @param file Excel表格文件
      * @return {@link Result<>}
      */
-    @ApiOperation(value = "更新用户头像")
+    @ApiOperation(value = "通过Excel导入学生数据")
     @ApiImplicitParam(name = "file", value = "用户头像", required = true, dataType = "MultipartFile")
     @PostMapping("/admin/users/excel")
     public Result<?> importExcel(MultipartFile file)

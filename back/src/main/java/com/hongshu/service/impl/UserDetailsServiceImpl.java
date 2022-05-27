@@ -1,5 +1,6 @@
 package com.hongshu.service.impl;
 
+import com.hongshu.constant.CommonConstant;
 import com.hongshu.dao.RoleDao;
 import com.hongshu.dto.UserDetailsDTO;
 import com.hongshu.entity.User;
@@ -69,7 +70,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
                 .nickname(user.getNickname())
                 .roleList(roleList)
                 .isDisable(user.getIsDisable())
-                .lastLoginTime(new Date())
+                .lastLoginTime(CommonConstant.getCurrentTime())
                 .build();
     }
 }

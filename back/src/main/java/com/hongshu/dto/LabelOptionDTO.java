@@ -20,17 +20,17 @@ import java.util.List;
 public class LabelOptionDTO
 {
 
-    /*
+    /**
     选项id
      */
     private Long id;
 
-    /*
+    /**
     选项名
      */
     private String label;
 
-    /*
+    /**
     子选项
      */
     private List<LabelOptionDTO> children;
