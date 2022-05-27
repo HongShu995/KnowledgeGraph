@@ -18,8 +18,22 @@ import java.util.List;
 @Repository
 public interface RoleDao extends Neo4jRepository<Role,Long>
 {
+    /**
+     * 获取角色列表
+     *
+     * @return 角色列表
+     */
     @Query("MATCH (n:Role) WHERE n.isDisable=false RETURN n")
     List<Role> listRoles();
+
+    /**
+     * 根据角色Id查询用户数量
+     *
+     * @param roleId 角色Id
+     * @return 用户数量
+     */
+    @Query("MATCH (n:User)-[r:UserRole]->(m:Role) WHERE id(m)={id} RETURN COUNT(n)")
+    Integer queryUserByRoleId(@Param("id")Long roleId);
 
     /**
      * 根据用户id查询拥有的角色
@@ -75,14 +89,6 @@ public interface RoleDao extends Neo4jRepository<Role,Long>
     @Query("MATCH (n:User)-[r:UserRole]->(m:Role) WHERE id(m)={id} RETURN n")
     List<User> listUserByRoleId(@Param("id")Long roleId);
 
-    /**
-     * 根据角色Id查询用户
-     *
-     * @param roleId 角色Id
-     * @return 用户
-     */
-    @Query("MATCH (n:User)-[r:UserRole]->(m:Role) WHERE id(m)={id} RETURN n")
-    User queryUserByRoleId(@Param("id")Long roleId);
 
     /**
      * 添加角色

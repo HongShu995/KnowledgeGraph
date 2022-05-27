@@ -10,6 +10,7 @@ import com.hongshu.dto.UserRoleDTO;
 import com.hongshu.entity.Menu;
 import com.hongshu.entity.Resource;
 import com.hongshu.entity.Role;
+import com.hongshu.entity.User;
 import com.hongshu.exception.MyException;
 import com.hongshu.handler.FilterInvocationSecurityMetadataSourceImpl;
 import com.hongshu.service.RoleService;
@@ -178,7 +179,7 @@ public class RoleServiceImpl implements RoleService
         // 判断角色下是否有用户
         for (Long roleId : roleIdList)
         {
-            if (roleDao.queryUserByRoleId(roleId) != null)
+            if (roleDao.queryUserByRoleId(roleId) > 0)
             {
                 throw new MyException("该角色下存在用户");
             }
@@ -186,8 +187,7 @@ public class RoleServiceImpl implements RoleService
 
         for (Long roleId : roleIdList)
         {
-            menuDao.deleteAllRoleMenuById(roleId);
-            roleDao.deleteRole(roleId);
+            roleDao.deleteById(roleId);
         }
     }
 
